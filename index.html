@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Radioloy Management app - Offline capable</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#3F51B5">
+  <meta name="description" content="An offline capable notepad powered by ServiceWorker. It's quick, distraction-free, mobile compatible(Android, iOS) and minimalist in nature.">
+  <meta name="keywords" content="note,offline,mobile,web,notepad,android,ios,desktop" />
+  <meta name="author" content="IDCW">
+  <meta name="application-name" content="IR App" />
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="./css/bootstrap.css">
+  <!-- Fluent Design Bootstrap -->
+  <link rel="stylesheet" href="./css/fluent.css">
+  <!-- Micon icons-->
+  <link rel="stylesheet" href="./css/micon.min.css">
+  <!--Custom style -->
+</head>
+
+<body>
+
+  <!-- Start your project here-->
+  <div id="header_container"></div>
+
+  <div id="page_container" class="container pageEntry" >
+    <div class="progress-cover progress-cover-primary">
+      <div class="progress progress-medium fluent-position">
+        <span class="progress-span"></span>
+        <span class="progress-span"></span>
+        <span class="progress-span"></span>
+        <span class="progress-span"></span>
+        <span class="progress-span"></span>
+      </div>
+    </div>
+  </div>
+
+  <div id="footer_container"></div>
+  <!-- /Start your project here-->
+
+  <!-- Scripts -->
+  <!-- JQuery -->
+  <script type="text/javascript" src="./js/jquery-3.3.1.min.js"></script>
+  <!-- Bootstrap tooltips -->
+  <script type="text/javascript" src="./js/popper.min.js"></script>
+  <!-- Bootstrap core JavaScript -->
+  <script type="text/javascript" src="./js/bootstrap.bundle.min.js"></script>
+  <script src="js/alpine.js" defer></script>
+  <script src="js/xlsx.core.min.js"></script>
+  <script src="js/alasql.min.js"></script>
+  <script type="module" src="app.js"></script>
+</body>
+
+</html>
