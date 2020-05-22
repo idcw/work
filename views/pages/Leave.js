@@ -1,14 +1,43 @@
-let Leave = {
-    render : async () => {
-        let view =  `
-            <section class="section">
-                <h1> Leave </h1>
-            </section>
-        `
-        return view
-    },
-    after_render: async () => {}
-        
-}
+// --------------------------------
+//  Define Data Sources
+// --------------------------------
 
-export default Leave;
+let intent = function (i, f) {
+    window[i || '_'] = f
+  }
+  
+  let value = function (el) {
+    return document.getElementById(el).value
+  }
+  
+  // Todo: Stateful Component + Component Composition
+  let Leave = function ({ render }) {
+    let state = { items: [], text: '', render }
+  
+    intent("addTodo", function (e) {
+        const newItem = {
+            text: value("text"),
+            id: Date.now()
+        }
+        state.items.push(newItem)
+        state.text = ''
+        state.render(representation())
+        return false
+    })
+  
+    intent("saveBusiness", function(e) {
+      console.log("save business")
+      return false
+    })
+  
+    let representation = () => `
+        <section class="section">
+            <h1> Leave </h1>
+        </section> 
+        `
+  
+    return representation
+  }
+  
+  export default Leave;
+  

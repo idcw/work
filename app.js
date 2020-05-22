@@ -1,40 +1,56 @@
 "use strict";
 
-import Home         from './views/pages/Home.js'
-import Rota         from './views/pages/Rota.js'
-import Business     from './views/pages/Business.js'
+import Home from './views/pages/Home.js'
+import Rota from './views/pages/Rota.js'
+import Business from './views/pages/Business.js'
 import EmployeeList from './views/pages/EmployeeList.js'
 import EmployeeEdit from './views/pages/EmployeeEdit.js'
-import Employee     from './views/pages/Employee.js'
-import Shifts       from './views/pages/Shifts.js'
-import Show         from './views/pages/Show.js'
-import Schedule     from './views/pages/Schedule.js'
-import Leave        from './views/pages/Leave.js'
-import Workload     from './views/pages/Workload.js'
-import Error404     from './views/pages/Error404.js'
-import PostShow     from './views/pages/PostShow.js'
-import Register     from './views/pages/Register.js'
+import Employee from './views/pages/Employee.js'
+import Shifts from './views/pages/Shifts.js'
+import Show from './views/pages/Show.js'
+import Schedule from './views/pages/Schedule.js'
+import Leave from './views/pages/Leave.js'
+import Workload from './views/pages/Workload.js'
+import Error404 from './views/pages/Error404.js'
+import PostShow from './views/pages/PostShow.js'
+import Register from './views/pages/Register.js'
 
-import Navbar       from './views/components/Navbar.js'
+import Navbar from './views/components/Navbar.js'
 //import Bottombar    from './views/components/Bottombar.js' 
 
-import Utils        from './services/Utils.js'
+import Utils from './services/Utils.js'
+
+let render = function (component, initState = {}, mountNode = 'app') {
+    initState.render = function (stateRepresentation, options = {}) {
+        const start = (options.focus) ? document.getElementById(options.focus).selectionStart : 0;
+        (document.getElementById(mountNode) || {}).innerHTML = stateRepresentation
+        if (options.focus) {
+            let f = document.getElementById(options.focus)
+            f.selectionStart = start
+            f.focus()
+        }
+    }
+
+    let stateRepresentation = component(initState)
+
+    initState.render((typeof stateRepresentation === 'function') ? stateRepresentation() : stateRepresentation)
+}
 
 // List of supported routes. Any url other than these routes will throw a 404 error
 const routes = {
-    '/'                 : Home
-    , '/rota'           : Rota
-    , '/employeelist'   : EmployeeList
-    , '/employeeedit'   : EmployeeEdit
-    , '/employee'       : Employee
-    , '/schedule'       : Schedule
-    , '/show'           : Show
-    , '/business'       : Business
-    , '/shifts'         : Shifts
-    , '/leave'          : Leave
-    , '/workload'       : Workload
-    , '/p/:id'          : PostShow
-    , '/register'       : Register
+    '/': Home
+    , '/rota': Rota
+    , '/employeelist': EmployeeList
+    , '/employeeedit': EmployeeEdit
+    , '/employee': Employee
+    , '/schedule': Schedule
+    , '/show': Show
+    , '/business': Business
+    , '/shifts': Shifts
+    , '/leave': Leave
+    , '/workload': Workload
+    , '/p/:id': PostShow
+    , '/register': Register
 };
 
 
@@ -45,12 +61,17 @@ const router = async () => {
     const header = null || document.getElementById('header_container');
     const content = null || document.getElementById('page_container');
     const footer = null || document.getElementById('footer_container');
-    
+
     // Render the Header and footer of the page
-    header.innerHTML = await Navbar.render();
-    await Navbar.after_render();
-//    footer.innerHTML = await Bottombar.render();
-//    await Bottombar.after_render();
+    render(
+        Navbar,
+        {},
+        "header_container"
+    )
+    //header.innerHTML = await Navbar.render();
+    //await Navbar.after_render();
+    //    footer.innerHTML = await Bottombar.render();
+    //    await Bottombar.after_render();
 
 
     // Get the parsed URl from the addressbar
@@ -58,13 +79,18 @@ const router = async () => {
 
     // Parse the URL and if it has an id part, change it with the string ":id"
     let parsedURL = (request.resource ? '/' + request.resource : '/') + (request.id ? '/:id' : '') + (request.verb ? '/' + request.verb : '')
-    
+
     // Get the page from our hash of supported routes.
     // If the parsed URL is not in our list of supported routes, select the 404 page instead
     let page = routes[parsedURL] ? routes[parsedURL] : Error404
-    content.innerHTML = await page.render();
-    await page.after_render();
-  
+    render(
+        page,
+        {},
+        "page_container"
+    )
+    //content.innerHTML = await page.render();
+    //await page.after_render();
+
 }
 
 // Listen on hash change:
@@ -75,10 +101,10 @@ window.addEventListener('load', router);
 
 // Registering ServiceWorker
 if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('sw.js').then(function(registration) {
+    navigator.serviceWorker.register('sw.js').then(function (registration) {
         // Registration was successful
-        console.log('ServiceWorker registration successful with scope: ',    registration.scope);
-    }).catch(function(err) {
+        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+    }).catch(function (err) {
         // registration failed :(
         console.log('ServiceWorker registration failed: ', err);
     });

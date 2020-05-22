@@ -1,14 +1,43 @@
-let Error404 = {
+// --------------------------------
+//  Define Data Sources
+// --------------------------------
 
-    render : async () => {
-        let view =  `
-            <section class="section">
-                <h1> 404 Error </h1>
-            </section>
-        `
-        return view
-    }
-    , after_render: async () => {
-    }
-}
-export default Error404;
+let intent = function (i, f) {
+    window[i || '_'] = f
+  }
+  
+  let value = function (el) {
+    return document.getElementById(el).value
+  }
+  
+  // Todo: Stateful Component + Component Composition
+  let Error404 = function ({ render }) {
+    let state = { items: [], text: '', render }
+  
+    intent("addTodo", function (e) {
+        const newItem = {
+            text: value("text"),
+            id: Date.now()
+        }
+        state.items.push(newItem)
+        state.text = ''
+        state.render(representation())
+        return false
+    })
+  
+    intent("saveBusiness", function(e) {
+      console.log("save business")
+      return false
+    })
+  
+    let representation = () => `
+        <section class="section">
+            <h1> 404 Error </h1>
+        </section>
+          `
+  
+    return representation
+  }
+  
+  export default Error404;
+  
