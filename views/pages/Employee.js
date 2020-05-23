@@ -2,35 +2,9 @@
 //  Define Data Sources
 // --------------------------------
 
-let intent = function (i, f) {
-  window[i || '_'] = f
-}
-
-let value = function (el) {
-  return document.getElementById(el).value
-}
-
-// Todo: Stateful Component + Component Composition
-let Employee = function ({ render }) {
-  let state = { items: [], text: '', render }
-
-  intent("addTodo", function (e) {
-      const newItem = {
-          text: value("text"),
-          id: Date.now()
-      }
-      state.items.push(newItem)
-      state.text = ''
-      state.render(representation())
-      return false
-  })
-
-  intent("saveBusiness", function(e) {
-    console.log("save business")
-    return false
-  })
-
-  let representation = () => `
+let Employee = {
+ render : async () => {
+     let view =  /*html*/`
   <section class="section">
     <div class="container-fluid p-0">
       <div class="col-md-12 p-0">
@@ -281,9 +255,11 @@ let Employee = function ({ render }) {
       </div>
     </div>
   </section>
-        `
+     `
+     return view
+ }
+ , after_render: async () => {
+ }
 
-  return representation
 }
-
 export default Employee;

@@ -2,41 +2,35 @@
 //  Define Data Sources
 // --------------------------------
 
-let intent = function (i, f) {
-  window[i || '_'] = f
+let getPostsList = async () => {
+  const options = {
+     method: 'GET',
+     headers: {
+         'Content-Type': 'application/json'
+     }
+ };
+ try {
+     const response = await fetch(`https://5bb634f6695f8d001496c082.mockapi.io/api/posts`, options)
+     const json = await response.json();
+     // console.log(json)
+     return json
+ } catch (err) {
+     console.log('Error getting documents', err)
+ }
 }
 
-let value = function (el) {
-  return document.getElementById(el).value
-}
+let Home = {
+ render : async () => {
+     let view = `
+      <section class="section">
+          <h1> Home </h1>
+      </section>
+     `
+     return view
+ }
+ , after_render: async () => {
+ }
 
-// Todo: Stateful Component + Component Composition
-let Home = function ({ render }) {
-  let state = { items: [], text: '', render }
-
-  intent("addTodo", function (e) {
-    const newItem = {
-      text: value("text"),
-      id: Date.now()
-    }
-    state.items.push(newItem)
-    state.text = ''
-    state.render(representation())
-    return false
-  })
-
-  intent("saveBusiness", function (e) {
-    console.log("save business")
-    return false
-  })
-
-  let representation = () => `
-        <section class="section">
-            <h1> Home </h1>
-        </section>
-          `
-
-  return representation
 }
 
 export default Home;

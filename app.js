@@ -20,22 +20,6 @@ import Navbar from './views/components/Navbar.js'
 
 import Utils from './services/Utils.js'
 
-let render = function (component, initState = {}, mountNode = 'app') {
-    initState.render = function (stateRepresentation, options = {}) {
-        const start = (options.focus) ? document.getElementById(options.focus).selectionStart : 0;
-        (document.getElementById(mountNode) || {}).innerHTML = stateRepresentation
-        if (options.focus) {
-            let f = document.getElementById(options.focus)
-            f.selectionStart = start
-            f.focus()
-        }
-    }
-
-    let stateRepresentation = component(initState)
-
-    initState.render((typeof stateRepresentation === 'function') ? stateRepresentation() : stateRepresentation)
-}
-
 // List of supported routes. Any url other than these routes will throw a 404 error
 const routes = {
     '/': Home
@@ -63,13 +47,8 @@ const router = async () => {
     const footer = null || document.getElementById('footer_container');
 
     // Render the Header and footer of the page
-    render(
-        Navbar,
-        {},
-        "header_container"
-    )
-    //header.innerHTML = await Navbar.render();
-    //await Navbar.after_render();
+    header.innerHTML = await Navbar.render();
+    await Navbar.after_render();
     //    footer.innerHTML = await Bottombar.render();
     //    await Bottombar.after_render();
 
@@ -83,13 +62,9 @@ const router = async () => {
     // Get the page from our hash of supported routes.
     // If the parsed URL is not in our list of supported routes, select the 404 page instead
     let page = routes[parsedURL] ? routes[parsedURL] : Error404
-    render(
-        page,
-        {},
-        "page_container"
-    )
-    //content.innerHTML = await page.render();
-    //await page.after_render();
+
+    content.innerHTML = await page.render();
+    await page.after_render();
 
 }
 
