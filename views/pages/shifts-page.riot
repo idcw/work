@@ -1,10 +1,4 @@
-// --------------------------------
-//  Define Data Sources
-// --------------------------------
-
-let Shifts = {
- render : async () => {
-     let view = `
+<shifts-page>
       <section class="section">
         <header class="bg-primary text-center py-5 mb-0">
           <div class="container">
@@ -39,12 +33,15 @@ let Shifts = {
           </div>
         </div>
       </section>
-     `
-     return view
- }
- , after_render: async () => {
- }
 
-}
+  <script>
+    export default {
 
-export default Shifts;
+    }
+  </script>
+
+  <style>
+
+  </style>
+
+</shifts-page>

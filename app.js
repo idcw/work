@@ -1,3 +1,11 @@
+riot.register('router', route.Router)
+riot.register('route', route.Route)
+
+riot.compile().then(function() {
+  riot.mount('app')
+})
+/*
+
 "use strict";
 
 import Home from './views/pages/Home.js'
@@ -74,6 +82,8 @@ window.addEventListener('hashchange', router);
 // Listen on page load:
 window.addEventListener('load', router);
 
+
+*/
 // Registering ServiceWorker
 if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('sw.js').then(function (registration) {

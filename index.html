@@ -16,28 +16,36 @@
 </head>
 
 <body>
+  <app></app>
+  <!-- riot tags -->
+  <script type="riot" src="/views/pages/app-main.riot"></script>
+  <script type="riot" src="/views/pages/app-navi.riot"></script>
+  <script type="riot" src="/views/pages/app-help.riot"></script>
+  <script type="riot" src="/views/pages/business-page.riot"></script>
+  <script type="riot" src="/views/pages/employee-page.riot"></script>
+  <script type="riot" src="/views/pages/rota-page.riot"></script>
+  <script type="riot" src="/views/pages/shifts-page.riot"></script>
+  <script type="riot" src="/views/pages/employeelist-page.riot"></script>
+  <script type="riot" src="/views/pages/employeeedit-page.riot"></script>
+  <script type="riot" src="/views/pages/home-page.riot"></script>
+  <script type="riot" src="/views/pages/leave-page.riot"></script>
+  <script type="riot" src="/views/pages/schedule-page.riot"></script>
+  <script type="riot" src="/views/pages/show-page.riot"></script>
+  <script type="riot" src="/views/pages/workload-page.riot"></script>    
 
-  <!-- Start your project here-->
-  <div id="header_container"></div>
+  <script type="riot" src="/views/pages/app.riot"></script>
 
-  <div id="page_container" class="container pageEntry" >
-    <div class="progress-cover progress-cover-primary">
-      <div class="progress progress-medium fluent-position">
-        <span class="progress-span"></span>
-        <span class="progress-span"></span>
-        <span class="progress-span"></span>
-        <span class="progress-span"></span>
-        <span class="progress-span"></span>
-      </div>
-    </div>
-  </div>
-
-  <div id="footer_container"></div>
-  <!-- /Start your project here-->
-
-  <!-- Scripts -->
+  <!-- scripts we need -->
   <script src="js/xlsx.core.min.js"></script>
-  <script src="js/alasql.min.js"></script>
+  <script src="js/alasql.min.js"></script> 
+  <script src="https://unpkg.com/riot@4/riot+compiler.min.js"></script>
+  <script src="https://unpkg.com/@riotjs/route/route.js"></script>
+
+  <style>
+    body { margin: 0 }
+  </style>
+ 
+
   <script type="module" src="app.js"></script>
 </body>
 
