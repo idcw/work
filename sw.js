@@ -1,15 +1,19 @@
-importScripts('js/cache-polyfill.js');
+importScripts('libs/cache-polyfill.js');
 
 var CACHE_VERSION = 'app-v20';
 var CACHE_FILES = [
     '/',
     'index.html',
-    'app.js',
-    'js/alasql.min.js',
-    'css/bootstrap.css',
-    'css/fluent.css',
+    'js/app.js',
+    'libs/alasql.min.js',
+    'css/bootstrap.min.css',
+    'css/style.css',
     'favicon.ico',
-    'manifest.json'
+    'manifest.json',
+    'img/icon-48.png',
+    'img/icon-96.png',
+    'img/icon-144.png',
+    'img/icon-196.png'
 ];
 
 self.addEventListener('install', function (event) {

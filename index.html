@@ -1,0 +1,47 @@
+<html>
+  <head>
+    <title>Radioloy Management app - Offline capable</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#3F51B5">
+    <meta name="description" content="An offline capable notepad powered by ServiceWorker. It's quick, distraction-free, mobile compatible(Android, iOS) and minimalist in nature.">
+    <meta name="keywords" content="note,offline,mobile,web,notepad,android,ios,desktop" />
+    <meta name="author" content="IDCW">
+    <meta name="application-name" content="IR App" />
+    <link href="css/minstyle.io.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link rel="icon" href="favicon.ico">
+    <link rel="manifest" href="manifest.json">
+  </head>
+  <body>
+    <div class="ms-tab ms-fullwidth" x-data="{ currentTab: 'tab1' }">
+      <ul>
+        <li><a x-bind:class="{ 'ms-active': currentTab === 'tab1' }" x-on:click="currentTab= 'tab1'">Dashboard</a></li>
+        <li><a x-bind:class="{ 'ms-active': currentTab === 'tab2' }" x-on:click="currentTab= 'tab2'">Rota</a></li>
+        <li><a x-bind:class="{ 'ms-active': currentTab === 'tab3' }" x-on:click="currentTab= 'tab3'">Leave</a></li>
+        <li><a x-bind:class="{ 'ms-active': currentTab === 'tab4' }" x-on:click="currentTab= 'tab4'">Workload</a></li>
+      </ul>
+        <div x-bind:class="{ 'hidden': currentTab !== 'tab1'}">
+            <div id="start"></div>
+        </div>
+        <div class="hidden" x-bind:class="
+        ~@?{ 'hidden': currentTab !== 'tab2' }">
+            <div id="rota"></div>
+        </div>
+        <div class="hidden" x-bind:class="{ 'hidden': currentTab !== 'tab3' }">
+            <div id="leave"></div>
+        </div>
+        <div class="hidden" x-bind:class="{ 'hidden': currentTab !== 'tab4' }">
+            <div id="workload"></div>
+        </div>
+    </div>
+
+    <!--<script src="libs/jquery.min.js"></script>-->
+    <script src="libs/uce.min.js" defer></script>
+    <script src="libs/xlsx.core.min.js"></script>
+    <script src="libs/alasql.min.js"></script>
+
+
+    <script src="js/app.js"></script>
+  </body>
+</html>
