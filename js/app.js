@@ -1,11 +1,8 @@
-
-
 // ALASQL section to create the databases
 
 var cityData = [{city:"Redmond", population:57530},
     {city:"Atlanta",population:447841},
     {city:"San Fracisco", population:837442}];
-
 
 function setupDb() {
 
@@ -34,7 +31,6 @@ function init() {
             setupTables()
         })
 }
-
 
 init().then(function(res) {
     //alasql.promise('SELECT * INTO employees FROM ?', [cityData])
