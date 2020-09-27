@@ -9,11 +9,7 @@ var CACHE_FILES = [
     'css/bootstrap.min.css',
     'css/style.css',
     'favicon.ico',
-    'manifest.json',
-    'img/icon-48.png',
-    'img/icon-96.png',
-    'img/icon-144.png',
-    'img/icon-196.png'
+    'manifest.json'
 ];
 
 self.addEventListener('install', function (event) {
