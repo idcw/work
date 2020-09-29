@@ -3,7 +3,7 @@
 
 <head>
 	<link href="css/bootstrap.css" rel="stylesheet" />
-	<link href="css/jquery-ui.css" rel="stylesheet">
+
 	<link rel="stylesheet" href="css/style.css">
 	<link rel="stylesheet" href="css/font-awesome.min.css">
 	<link href='css/fullcalendar.min.css' rel='stylesheet' />
@@ -17,7 +17,6 @@
 	<script src="js/db.js"></script>
 	<script src='lib/moment.min.js'></script>
 	<script src='lib/fullcalendar.min.js'></script>
-  <script src="lib/jquery-ui.js"></script>
 
 	<meta charset="utf-8">
 	<meta http-equiv="Pragma" content="no-cache">
@@ -43,9 +42,6 @@
 
 		<!-- Abstract -->
 		<div class="media" style="margin-bottom: 20px;">
-			<div class="media-left">
-				<img id="img-emp" src="" width=75 height=100 alt="please upload image file">
-			</div>
 			<div class="media-body">
 				<h4 class="media-heading" id="div-name_kanji"></h4>
 				<div id="div-name_kana"></div>
@@ -84,7 +80,7 @@
 			</li>
 			<li>
 				<a href="#notifications" data-toggle="tab">
-					<span class="fa fa-bell"></span> Pending Requests</a>
+					<span class="fa fa-bell"></span> Leave Requests</a>
 			</li>
 
 			<li>
@@ -113,44 +109,52 @@
 							<td class="col-sm-10" id="name"></td>
 						</tr>
 						<tr>
-							<td class="col-sm-2">Gender</td>
-							<td class="col-sm-10" id="sex"></td>
+							<td class="col-sm-2">start date</td>
+							<td class="col-sm-10" id="startdate"></td>
 						</tr>
 						<tr>
-							<td class="col-sm-2">Date of Birth</td>
-							<td class="col-sm-10" id="birthday"></td>
+							<td class="col-sm-2">finish date</td>
+							<td class="col-sm-10" id="finishdate"></td>
 						</tr>
 						<tr>
-							<td class="col-sm-2">Telephone</td>
-							<td class="col-sm-10" id="tel"></td>
+							<td class="col-sm-2">min hours</td>
+							<td class="col-sm-10" id="minhours"></td>
 						</tr>
 						<tr>
-							<td class="col-sm-2">Emergency Contact Name</td>
-							<td class="col-sm-10" id="ctct_name"></td>
+							<td class="col-sm-2">max hours</td>
+							<td class="col-sm-10" id="maxhours"></td>
 						</tr>
 						<tr>
-							<td class="col-sm-2">Emergency Contact Address</td>
-							<td class="col-sm-10" id="ctct_addr"></td>
+							<td class="col-sm-2">primary positions</td>
+							<td class="col-sm-10" id="primarypositions"></td>
 						</tr>
 						<tr>
-							<td class="col-sm-2">Emergency Contact Tel</td>
-							<td class="col-sm-10" id="ctct_tel"></td>
+							<td class="col-sm-2">secondary positions</td>
+							<td class="col-sm-10" id="secondarypositions"></td>
 						</tr>
 						<tr>
-							<td class="col-sm-2">Passport No.</td>
-							<td class="col-sm-10" id="pspt_no"></td>
+							<td class="col-sm-2">days unavailable</td>
+							<td class="col-sm-10" id="daysunavailable"></td>
 						</tr>
 						<tr>
-							<td class="col-sm-2">Passport Date</td>
-							<td class="col-sm-10" id="pspt_date"></td>
+							<td class="col-sm-2">dates unavailable</td>
+							<td class="col-sm-10" id="datesunavailable"></td>
 						</tr>
 						<tr>
-							<td class="col-sm-2">Passport Name</td>
-							<td class="col-sm-10" id="pspt_name"></td>
+							<td class="col-sm-2">preferred shifts</td>
+							<td class="col-sm-10" id="preferredshifts"></td>
 						</tr>
 						<tr>
-							<td class="col-sm-2">Type of Lending</td>
-							<td class="col-sm-10" id="rental"></td>
+							<td class="col-sm-2">prolonged unavailable</td>
+							<td class="col-sm-10" id="prolongedunavailable"></td>
+						</tr>
+						<tr>
+							<td class="col-sm-2">SPA</td>
+							<td class="col-sm-10" id="spa"></td>
+						</tr>
+						<tr>
+							<td class="col-sm-2">PA</td>
+							<td class="col-sm-10" id="pa"></td>
 						</tr>
 					</tbody>
 				</table>

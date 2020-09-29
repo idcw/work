@@ -2,6 +2,7 @@ var id = parseInt($.url().param('id'));
 if (id) {
 	// read data from database
 	var edu = alasql('SELECT * FROM edu WHERE id=?', [ id ])[0];
+
 	$('#school input').val(edu.school);
 	$('#major input').val(edu.major);
 	$('#grad input').val(edu.grad);

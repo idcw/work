@@ -30,10 +30,10 @@ if (q1) {
     // candidate populate
     var active_candidates = alasql("select * from application where jobid = ? and isactive = 1", [q1]);
     var job_active_candidate = $('#j-active-candidate').html(generateListFromApplication(active_candidates));
-    
+
     var all_candidates = alasql("select * from application where jobid = ?", [q1]);
     $('#j-all-candidate').html(generateListFromApplication(all_candidates));
-    
+
     var cans = alasql('select * from application where jobid= ? and isactive = 1 order by email', [q1]);
     console.log(cans);
     var dup = $('#j-duplicate-candidate');
@@ -50,10 +50,6 @@ if (q1) {
         }
         i = j-1;
     }
-
-
-
-
   } else {
     $("#content").hide();
     $("#page404").html(
@@ -69,8 +65,7 @@ if (q1) {
 
 /* ------------------------ Utility Function ----------------------*/
 
-function deleteCandidate(e)
-{
+function deleteCandidate(e) {
 
   var oo = $(e.closest('li')).attr('data-id');
   console.log(oo);
@@ -78,8 +73,8 @@ function deleteCandidate(e)
   alasql('update application set isactive = 0 where id = ?',[id]);
   $(e.closest('li')).remove();
 }
-function buttonInterview(app)
-{
+
+function buttonInterview(app) {
   var jobid = app.jobid;
   var steps = alasql('select * from pipeline where jobid = ? order by stepid',[jobid]);
   var appComplete = alasql('select * from feedback where jobid= ? and appid = ? order by stepid',[jobid, app.id]);
@@ -100,15 +95,14 @@ function buttonInterview(app)
       if(app.isactive == 0) newString = '<button class="btn btn-danger">' + alasql('select * from step where id = ?',[pipe])[0].name + '</button>';
 
       else newString = '<button class="btn btn-default">' + alasql('select * from step where id = ?',[pipe])[0].name + '</button>';
-    } 
+    }
 
     out += newString;
   }
   return out;
 }
 
-function showFeedbackModal(e)
-{
+function showFeedbackModal(e) {
   var jobid = parseInt($(e).attr('data-jobid'));
   var appid = parseInt($(e).attr('data-appid'));
   var stepid = parseInt($(e).attr('data-stepid'));
@@ -134,16 +128,14 @@ function showFeedbackModal(e)
   $('#feedback-candidate').append('<p>' + comment + '</p>');
 }
 
-
-function generateListFromApplication(arr)
-{
+function generateListFromApplication(arr) {
     var list = $('<ul class="list-group"></ul>');
     for(var i= 0; i < arr.length; i ++) {
       var li = '<li data-id="candidate' + arr[i].id + '" class="list-group-item">\
       <div class="row">\
           <div class="col-md-2">' + arr[i].id + ' ' + arr[i].name + '</div> \
           <div class="col-md-8"> \
-                  <div class="btn-group btn-group-sm" role="group" aria-label="...">' 
+                  <div class="btn-group btn-group-sm" role="group" aria-label="...">'
                   + buttonInterview(arr[i]) +
                   '</div>\
           </div>\
@@ -157,7 +149,7 @@ function generateListFromApplication(arr)
 }
 
 /* ------------------------- Add interviewer -----------------------*/
-function populateInterviewer(){
+function populateInterviewer() {
     var $interviewer = $("#j-interviewer");
     $('#j-interviewer').html('');
     var interviewer = alasql("select * from interview where jobid = ?", [q1]);
@@ -225,7 +217,7 @@ function updateListOfEmp() {
       for (var j = 0; j < interviewer.length; j++) {
         if (interviewer[j].empid == emp.id) added = 1;
       }
-  
+
       if (added)
         tr.append('<button class="btn btn-warning" disabled>Added</button>');
       else
@@ -234,9 +226,8 @@ function updateListOfEmp() {
         );
       tr.appendTo(tbody);
     }
-    
-  }
 
+  }
 
 function deleteInterviewer(e) {
   var id = parseInt(e.closest(".list-group-item").id);
@@ -244,13 +235,11 @@ function deleteInterviewer(e) {
   e.closest(".list-group-item").remove();
 }
 
-
 function addInterviewer(e) {
  var tr = parseInt(e.closest('tr').id.slice(4));
   alasql('insert into interview values(?,?);',[q1, tr]);
   $('#' + e.closest('tr').id + ' button' ).removeClass('btn-success').addClass('btn-warning').text('Added').attr('disabled',true);
 }
-
 
 /* ------------------------- Add Pipeline -------------------------------*/
 
@@ -260,12 +249,12 @@ function populateStep() {
 
     var out = $('<ul class="list-group"> </ul>');
     var steps = alasql('select * from pipeline where jobid = ? order by stepid',[q1]);
-    
+
     for(var i = 0; i < steps.length ; i ++) {
         var name = alasql('select * from step where id = ?',[steps[i].stepid])[0].name;
         var className, str;
         var temp = alasql('select * from pipeline where jobid= ? and stepid = ?', [q1, steps[i].stepid])[0];
-        if(temp.cardid > 0) 
+        if(temp.cardid > 0)
             className= "btn-success", str = alasql('select * from card where id = ?', [temp.cardid])[0].name;
         else className = "btn-warning", str = "Add Scorecard";
 
@@ -280,21 +269,20 @@ function populateStep() {
                 </div>\
             </div> \
         </li>';
-        
+
       out.append(indiv);
     }
     pipe.append(out);
     if($('#pipeline-modal').is(':visible')) $('#pipeline-modal').modal('toggle');
 }
+
 function deleteStep(e) {
     var id = parseInt(e.closest(".list-group-item").id.slice(4));
     alasql("delete from pipeline where jobid = ? and stepid = ?", [q1, id]);
     e.closest(".list-group-item").remove();
   }
 
-
-function updateListOfStep()
-{
+function updateListOfStep() {
     var already = alasql("select * from pipeline where jobid = ?", [q1]);
     console.log(already);
     var all = alasql("select * from step");
@@ -305,12 +293,12 @@ function updateListOfStep()
       var tr = $('<tr id="step-modal-' + step.id + '"></tr>');
       tr.append("<td>" + step.name + "</td>");
 
-      
+
       var added = 0;
       for (var j = 0; j < already.length; j++) {
         if (already[j].stepid == step.id) added = 1;
       }
-  
+
       if (added)
         tr.append('<button class="btn btn-warning btn-sm" disabled>Added</button>');
       else
@@ -322,7 +310,7 @@ function updateListOfStep()
 }
 
 function addStep(e) {
-    
+
     var tr = parseInt(e.closest('tr').id.slice(11))
     console.log(tr);
      alasql('insert into pipeline values(?,?,?);',[q1, tr,0]);
@@ -351,7 +339,7 @@ function editCard(e) {
             list.append('<li class="list-group-item">' + skills[i].skill + '</li>');
         }
         $('#description-for-card').html(list);
-    });   
+    });
 }
 
 function saveCard(e) {
@@ -463,6 +451,4 @@ function processInterviewRequest() {
         }
     }
     }
-} 
-
-
+}

@@ -16,7 +16,7 @@ shifts = ipcRenderer.sendSync("getShiftRequestSync");
 // Get skills/positions
 skills = ipcRenderer.sendSync("getBusinessInfoSync").skills;
 
-// Sends a request to the main process to get 
+// Sends a request to the main process to get
 var employee = ipcRenderer.sendSync("showEmployeeRequest", remote.getGlobal("currentEmployeeId"));
 
 function getPreferredShiftsList(className, daysOfWeek) {
@@ -83,8 +83,6 @@ function convertStandardTime(value) {
 }
 
 function createShiftPreferencesTable(daysOfWeek) {
-
-
     $("#preferredShiftSection").append(
         '<div class="table-responsive">' +
         '<table class="table table-bordered">' +
@@ -152,7 +150,6 @@ $(document).ready(() => {
         todayHighlight: true,
         autoclose: true
     });
-
 
     // ===================
     // POSITIONS
@@ -464,7 +461,7 @@ $(document).ready(() => {
         $(".dateUnavailableEnd:first").val(obj.endTime);
     })
 
-    // Setting prolonged Unavailability 
+    // Setting prolonged Unavailability
     employee.prolongedUnavailability.forEach(obj => {
         $("#addProlongedUnavailability").click();
         $(".prolongedUnavailabilityStart:first").val(obj.startTime);

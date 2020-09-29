@@ -1,27 +1,30 @@
 // read personal info
 var id = parseInt($.url().param('id'));
+
+// pull data from database
 var emp = alasql('SELECT * FROM emp WHERE id=?', [ id ])[0];
+
 $('#number').text(emp.number);
 $('#name').text(emp.name);
-$('#sex').text(DB.choice(emp.sex));
-$('#birthday').text(emp.birthday);
-$('#tel').text(emp.tel);
-$('#ctct_name').text(emp.ctct_name);
-$('#ctct_addr').text(emp.ctct_addr);
-$('#ctct_tel').text(emp.ctct_tel);
-$('#pspt_no').text(emp.pspt_no);
-$('#pspt_date').text(emp.pspt_date);
-$('#pspt_name').text(emp.pspt_name);
-$('#rental').text(DB.choice(emp.rental));
-
+$('#startdate').text(emp.startdate);
+$('#finishdate').text(emp.finishdate);
+$('#minhours').text(emp.minhours);
+$('#maxhours').text(emp.maxhours);
+$('#primarypositions').text(emp.primarypositions);
+$('#secondarypositions').text(emp.secondarypositions);
+$('#daysunavailable').text(emp.daysunavailable);
+$('#datesunavailable').text(emp.datesunavailable);
+$('#preferredshifts').text(emp.preferredshifts);
+$('#prolongedunavailable').text(emp.prolongedunavailable);
+$('#spa').text(emp.spa);
+$('#pa').text(emp.pa);
 
 // set image and name
-$('#img-emp').attr('src', 'img/' + emp.id + '.jpg');
 $('#div-name_kanji').text(emp.name);
 $('#div-number').text(emp.number);
 $('#nav-emp').text(emp.name);
 $('#form-emp').attr('href', 'emp-form.html?id=' + id);
-$('#position').text(alasql('select * from position where id=?', [emp.position])[0].position);
+
 // read address info
 var addrs = alasql('SELECT * FROM addr WHERE emp=?', [ id ]);
 for (var i = 0; i < addrs.length; i++) {
@@ -79,6 +82,7 @@ $('#ins-edu').attr('href', 'edu-form.html?emp=' + id);
 // delete employee
 function destroy() {
 	if (window.confirm('are you sure to delete employee?')) {
+		// delete from the database
 		alasql('DELETE FROM emp WHERE id=?', [ id ]);
 		window.location.assign('index.html');
 	}
@@ -86,7 +90,7 @@ function destroy() {
 
 var today = new Date();
 var date = today.getFullYear() + "-" + ("0" + (today.getMonth() + 1)).slice(-2) + "-" + ("0" + today.getDate()).slice(-2);
-    
+
 $('#calendar').fullCalendar({
 	header: {
 	  left: 'prev,next today',
@@ -123,7 +127,7 @@ $('#calendar').fullCalendar({
 	events: []
   });
 
-  $('#calendar-choose').fullCalendar({
+$('#calendar-choose').fullCalendar({
 	header: {
 	  left: 'prev,next today',
 	  center: 'title',
@@ -137,7 +141,7 @@ $('#calendar').fullCalendar({
 		agendaWeek: {buttonText: 'This Week'},
 		listWeek : { buttonText: 'List Week'}
 	},
-	
+
 	selectable: true,
 	selectHelper: true,
 	select: function(start, end) {
@@ -161,40 +165,37 @@ $('#calendar').fullCalendar({
 	events: []
   });
 
-  function testFunction()
-  {
+function testFunction() {
 	  var e = $('#calendar-choose').fullCalendar('clientEvents');
 	  console.log(e);
-	 
+
 	var planid =  alasql('SELECT MAX(id) + 1 as id FROM empplan')[0].id;
 	 for(var i = 0; i < e.length ; i ++) {
         var title = e[i].title;
         var start = Date.parse(e[i].start);
         var end = Date.parse(e[i].end);
         console.log(planid, id, title, start, end, $('#empPlan-choose').val());
-        
+
         alasql('insert into empplan values (?,?,?,?,?,?);', [planid, id,$('#empPlan-choose').val(), title, start,  end]);
 
      }
      $('#calendar-choose').fullCalendar('removeEvents');
 	 planList();
   }
-  $('#calendar-choose').fullCalendar('option', 'timezone', 'local');
 
-
-
+$('#calendar-choose').fullCalendar('option', 'timezone', 'local');
 
 planList();
 showCalendar();
 showNotification();
-function planList() 
-{
+
+function planList() {
     var plans = alasql('select * from empplan where empid = ? order by id',[id]);
     console.log(plans);
     var prev = -1;
     var counter = 1;
-    
-    
+
+
     $('#accordion').html('');
     for(var i = 0; i < plans.length ; i ++) {
         console.log(i);
@@ -235,9 +236,8 @@ function planList()
     });
     $('#accordion').accordion('refresh');
 
-    
-}
 
+}
 
 function deleteplan(e) {
     var planid = parseInt(e.closest('div').id.slice(4));
@@ -245,8 +245,7 @@ function deleteplan(e) {
     planList();
 }
 
-function showCalendar() 
-{
+function showCalendar() {
 	console.log(100);
 	$('#calendar').fullCalendar('option', 'timezone', 'local');
 	var plans = alasql('select * from scheduleInterview where empid = ?',[id]);
@@ -258,24 +257,23 @@ function showCalendar()
         }
         $('#calendar').fullCalendar('renderEvent',newEvent, true);
     }
-    
+
 }
-function showNotification()
-{
+
+function showNotification(){
 	console.log(id);
 	var pending = alasql('select * from pendingReq where empid = ?',[id]);
 	console.log(pending);
 	var list = $('#notifications .list-group');
 	console.log(list);
 	for(var i = 0; i < pending.length ; i ++) {
-		var li  = '<li data-id="'+ pending[i].intReqid + '" class="list-group-item">Interview Request on <strong>' + new Date(pending[i].time).toString() + 
+		var li  = '<li data-id="'+ pending[i].intReqid + '" class="list-group-item">Interview Request on <strong>' + new Date(pending[i].time).toString() +
 		'   </strong><button class="btn btn-sm btn-success" onclick="acceptRequest(this)" >Accept</button><button onclick="deleteRequest(this)" class="btn btn-sm btn-danger" style="float:right">Decline</button></li>';
 		list.append(li);
 	}
 }
 
-function deleteRequest(e)
-{
+function deleteRequest(e){
 	var reqid = parseInt($(e.closest('li')).attr('data-id'));
 	console.log(id);
 	var request = alasql('select * from pendingReq where intReqid = ?', [reqid])[0];
@@ -287,22 +285,20 @@ function deleteRequest(e)
 	e.closest('li').remove();
 }
 
-function acceptRequest(e)
-{
+function acceptRequest(e){
 	var reqid = parseInt($(e.closest('li')).attr('data-id'));
 	console.log(id);
 	var request = alasql('select * from pendingReq where intReqid = ?', [reqid])[0];
 	var application = alasql('select * from application where id = ?', [request.appid])[0];
-	
+
 	console.log(request);
 
 
 	alasql('delete from pendingReq where intReqid = ?', [reqid]);
 	var newid = alasql('select MAX(id)+1 as id FROM scheduleInterview')[0].id;
 	alasql('INSERT INTO scheduleInterview VALUES(?,?,?,?,?)', [newid , application.jobid, application.id, id, request.time]);
-	
+
 	e.closest('li').remove();
 }
 
 /*---------------------------- FEEDBACK ------------------*/
-

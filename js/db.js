@@ -9,10 +9,24 @@ DB.init = function() {
 DB.load = function() {
 	// personal info
 	alasql('DROP TABLE IF EXISTS emp;');
-	alasql('CREATE TABLE emp(id INT IDENTITY, number STRING, name STRING, sex INT, birthday DATE, tel STRING, ctct_name STRING, ctct_addr STRING, ctct_tel STRING, pspt_no STRING, pspt_date STRING, pspt_name STRING, rental STRING, position INT);');
+	alasql(`CREATE TABLE emp(id INT IDENTITY,
+														number STRING,
+														name STRING,
+														startdate DATE,
+														finishdate DATE,
+														minhours NUMBER,
+														maxhours NUMBER,
+														primarypositions STRING,
+														secondarypositions STRING,
+														daysunavailable STRING,
+														datesunavailable STRING,
+														preferredshifts STRING,
+														prolongedunavailable STRING,
+														spa NUMBER,
+														pa NUMBER);`);
 	var pemp = alasql.promise('SELECT MATRIX * FROM CSV("data/EMP-EMP.csv", {headers: true})').then(function(emps) {
 		for (var i = 0; i < emps.length; i++) {
-			alasql('INSERT INTO emp VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?);', emps[i]);
+			alasql('INSERT INTO emp VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);', emps[i]);
 		}
 	});
 
@@ -54,7 +68,7 @@ DB.load = function() {
 					alasql('INSERT INTO choice VALUES(?,?,?);', choices[i]);
 				}
 			});
-	
+
 	//EDUCATION CANDIDATE
 	alasql('DROP TABLE IF EXISTS educan;');
 	alasql('CREATE TABLE educan(id INT IDENTITY, appid INT, degreeid INT, university STRING, major STRING, cgpa NUMBER);');
@@ -64,7 +78,7 @@ DB.load = function() {
 					alasql('INSERT INTO educan VALUES(?,?,?,?,?,?);', choices[i]);
 				}
 			});
-	
+
 	//WORK EXP
 	alasql('DROP TABLE IF EXISTS workexp;');
 	alasql('CREATE TABLE workexp(id INT IDENTITY, appid INT, position STRING, company STRING, duration INT, description STRING);');
@@ -74,7 +88,7 @@ DB.load = function() {
 					alasql('INSERT INTO workexp VALUES(?,?,?,?,?,?);', choices[i]);
 				}
 			});
-	
+
 	//PROJECT
 	alasql('DROP TABLE IF EXISTS project;');
 	alasql('CREATE TABLE project(id INT IDENTITY, appid INT, name STRING, description STRING);');
@@ -94,7 +108,7 @@ DB.load = function() {
 					alasql('INSERT INTO langexp VALUES(?,?,?,?,?,?);', choices[i]);
 				}
 			});
-	
+
 	// ACHEIVEMENT
 	alasql('DROP TABLE IF EXISTS acheivement;');
 	alasql('CREATE TABLE acheivement(id INT IDENTITY, appid INT, name STRING, description STRING);');
@@ -104,7 +118,7 @@ DB.load = function() {
 					alasql('INSERT INTO acheivement VALUES(?,?,?,?,?,?);', choices[i]);
 				}
 			});
-		
+
 	//applications
 	alasql('DROP TABLE IF EXISTS application;');
 	alasql('CREATE TABLE application(id INT,jobid INT,name STRING,phone STRING,email STRING,date STRING,address STRING ,country STRING ,isactive INT );');
@@ -155,7 +169,7 @@ DB.load = function() {
 			alasql('INSERT INTO interview VALUES(?,?);', interviews[i]);
 		}
 	});
-	
+
 
 	// INTERVIEW REQUEST
 	alasql('DROP TABLE IF EXISTS interviewRequest;');
@@ -187,7 +201,7 @@ DB.load = function() {
 		}
 	});
 
-	// PENDING Req 
+	// PENDING Req
 	alasql('DROP TABLE IF EXISTS pendingReq;');
 	alasql('CREATE TABLE pendingReq(intReqid INT, appid INT, empid INT, time INT);');
 	var ppendingReq = alasql.promise('SELECT MATRIX * FROM CSV("data/PENDING-PENDING.csv", {headers: true})').then(function(interviews) {
@@ -204,7 +218,7 @@ DB.load = function() {
 			alasql('INSERT INTO sendAgainChoiceForm VALUES(?);', interviews[i]);
 		}
 	});
-	
+
 	//feedback
 
 	alasql('DROP TABLE IF EXISTS feedback;');
@@ -261,7 +275,7 @@ DB.load = function() {
 			alasql('INSERT INTO step VALUES(?,?);', interviews[i]);
 		}
 	});
-	
+
 
 	// reload html
 	Promise.all([prating,pfeedback,psendAgainChoiceForm, pdeclinedInterview,ppendingReq,pscheduleInterview,pinterviewerReq, pachieve, plangexp, pproject, pwork, peducan,plangs, pemp, paddr, pfamily, pedu, pchoice, papplication, ppositions, pjobs, pinterviewer , pdepts, ppipe, pstep, pcard, pplan]).then(function() {
@@ -288,7 +302,7 @@ DB.choices = function(name) {
 	return alasql('SELECT id, text FROM choice WHERE name = ?', [ name ]);
 };
 
-// connect to database
+// connect to database for all pages
 try {
 	alasql('ATTACH localStorage DATABASE EMP');
 	alasql('USE EMP');

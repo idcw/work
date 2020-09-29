@@ -18,12 +18,11 @@ if (q1) {
 var element = document.getElementById('tbody-emps')
 element.innerHTML = `${emps.map((emp, i) => `
 	<tr>
-		<td><img height=40 class="img-circle" src="img/${emp.id}.jpg"></td>
 		<td><a href="emp.html?id=${emp.id}">${emp.number}</a></td>
 		<td>${emp.name}</td>
-		<td>${DB.choice(emp.sex)}</td>
-		<td>${emp.birthday}</td>
-		<td>${emp.tel}</td>
+		<td>${emp.primarypositions}</td>
+		<!--<td>${DB.choice(emp.sex)}</td>-->
+		<td>${emp.startdate}</td>
 	</tr>
 `).join('')}
 `
