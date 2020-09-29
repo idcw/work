@@ -15,24 +15,15 @@ if (q1) {
 }
 
 // create employee list
-var tbody = $('#tbody-emps');
-for (var i = 0; i < emps.length; i++) {
-	var emp = emps[i];
-	var tmp =`<tr>
-							<td><img height=40 class="img-circle" src="img/${emp.id}.jpg"></td>
-							<td><a href="emp.html?id=${emp.id}">${emp.number}</a></td>
-							<td>${emp.name}</td>
-							<td>${DB.choice(emp.sex)}</td>
-							<td>${emp.birthday}</td>
-							<td>${emp.tel}</td>
-						</tr>`
-
-	var tr = $('<tr></tr>');
-	tr.append('<td><img height=40 class="img-circle" src="img/' + emp.id + '.jpg"></td>');
-	tr.append('<td><a href="emp.html?id=' + emp.id + '">' + emp.number + '</a></td>');
-	tr.append('<td>' + emp.name + '</td>');
-	tr.append('<td>' + DB.choice(emp.sex) + '</td>');
-	tr.append('<td>' + emp.birthday + '</td>');
-	tr.append('<td>' + emp.tel + '</td>');
-	tr.appendTo(tbody);
-}
+var element = document.getElementById('tbody-emps')
+element.innerHTML = `${emps.map((emp, i) => `
+	<tr>
+		<td><img height=40 class="img-circle" src="img/${emp.id}.jpg"></td>
+		<td><a href="emp.html?id=${emp.id}">${emp.number}</a></td>
+		<td>${emp.name}</td>
+		<td>${DB.choice(emp.sex)}</td>
+		<td>${emp.birthday}</td>
+		<td>${emp.tel}</td>
+	</tr>
+`).join('')}
+`
