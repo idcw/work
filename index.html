@@ -3,6 +3,18 @@
   <head>
     <meta charset="UTF-8" />
     <title>Rota World</title>
+    <link href="css/bootstrap.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dataTables.bootstrap.min.css">
+    <link href="css/fluent.css" rel="stylesheet" />
+
+    <script src="lib/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="lib/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="lib/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <script src="lib/alasql.min.js"></script>
+    <script src="js/db.js"></script>
+
     <script src="lib/react.development.js"></script>
     <script src="lib/react-dom.development.js"></script>
 
@@ -11,13 +23,19 @@
   </head>
   <body>
     <div id="root"></div>
-    <script type="text/babel">
+    <script>
+      Babel.registerPreset("my-preset", {
+        presets: [
+          [Babel.availablePresets["es2016"], { "modules": false }],
+          [Babel.availablePresets["react"]]
 
-      ReactDOM.render(
-        <h1>Hello, world!</h1>,
-        document.getElementById('root')
-      );
-
+        ],
+        plugins: [
+          [Babel.availablePlugins["transform-modules-umd"]],
+        ],
+        moduleId: "main"
+      });
     </script>
+    <script src="js/app.js" type="text/babel" data-presets="my-preset"></script>
   </body>
 </html>
