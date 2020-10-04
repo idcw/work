@@ -1,3 +1,6 @@
+import "./db.js";
+
+let memo = {};
 
 class Header2 extends React.Component {
   reload = () =>  {
@@ -67,24 +70,28 @@ class App extends React.Component {
     //DB.remove()
   };
 
-  handleClick(e) {
-    e.preventDefault();
-    this.setState({
-      // page: !this.state.page
-    });
-  }
+  handleClick = param => {
+    const handler = e => {
+      const nextValue = e.target.value;
+      this.setState({ page: param });
+    }
+    if (!memo[param]) {
+      memo[param] = e => handler(e)
+    }
+    return memo[param]
+  };
 
   render() {
     let status;
     switch (this.state.page) {
-      case "list":
-        content = <EmployeeList></EmployeeList>;
+      case "home":
+        content = <EmployeeTable></EmployeeTable>;
         break;
-      case false:
-        content = <p>OFF</p>;
+      case "dashboard":
+        content = <EmployeePage></EmployeePage>;
         break;
       default:
-        content = null;
+        content = <EmployeeTable></EmployeeTable>;
         break;
     }
     return (
@@ -102,11 +109,11 @@ class App extends React.Component {
 
           <div id="navbarBasicExample" className="navbar-menu">
             <div className="navbar-start">
-              <a className="navbar-item">
+              <a className="navbar-item" id="home" onClick={this.handleClick("home")}>
                 Home
               </a>
 
-              <a className="navbar-item">
+              <a className="navbar-item" id="dashboard" onClick={this.handleClick("dashboard")}>
                 Dashboard
               </a>
 
@@ -120,14 +127,14 @@ class App extends React.Component {
                 </a>
 
                 <div className="navbar-dropdown">
-                  <a className="navbar-item">
+                  <a className="navbar-item" onClick={this.handleClick(this)}>
                     Reload
                   </a>
-                  <a className="navbar-item">
+                  <a className="navbar-item" onClick={this.handleClick(this)}>
                     Init DB
                   </a>
                   <hr className="navbar-divider"></hr>
-                  <a className="navbar-item">
+                  <a className="navbar-item" onClick={this.handleClick(this)}>
                     Delete DB
                   </a>
                 </div>
@@ -135,7 +142,6 @@ class App extends React.Component {
             </div>
           </div>
       	</nav>
-        <button onClick={this.handleClick.bind(this)}>Toggle</button>
         {content}
       </div>
     );
@@ -143,12 +149,77 @@ class App extends React.Component {
 
 }
 
-class EmployeeList extends React.Component {
+class EmployeeTable extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {emps: null};
+    this.getData();
+  }
+
+  getData() {
+    // parse request params = turn into props
+    var q1 = null;
+    var q2 = null;
+    /*
+    var q1 = $.url().param('q1');
+    $('input[name="q1"]').val(q1);
+    var q2 = $.url().param('q2');
+    $('input[name="q2"]').val(q2);
+    */
+
+    // read data from database
+    if (q1) {
+      console.log("if q1")
+    	this.state.emps = alasql('SELECT * FROM emp WHERE number LIKE ?', [ '%' + q1 + '%' ]);
+    } else if (q2) {
+      console.log("if q2")
+    	this.state.emps = alasql('SELECT * FROM emp WHERE name LIKE ?', [ '%' + q2 + '%' ]);
+    } else {
+      console.log("if nothing")
+    	this.state.emps = alasql('SELECT * FROM emp', []);
+    }
+
+  }
 
   render() {
     return (
-      <div>List</div>
+      <table className="table is-striped" id = "h-table">
+        <thead>
+          <tr>
+            <th>Number</th>
+            <th>Name</th>
+            <th>primary Position</th>
+            <th>Start Date</th>
+          </tr>
+        </thead>
+        <tbody id="tbody-emps">
+          {this.state.emps.map((emp, i) => (
+            <tr key={i}>
+              <td><a href="emp.html?id=${emp.id}">{emp.number}</a></td>
+              <td>{emp.name}</td>
+              <td>{emp.primarypositions}</td>
+              <td>{emp.startdate}</td>
+            </tr>))
+          }
+        </tbody>
+      </table>
     );
+  }
+}
+
+class EmployeePage extends React.Component {
+  constructor(props) {
+    super(props)
+  }
+
+  getData() {
+
+  }
+
+  render() {
+    return(
+      <div>EmployeePage</div>
+    )
   }
 }
 
