@@ -1,6 +1,7 @@
 import "./db.js";
 
-let memo = {};
+const Link = ReactRouterDOM.Link,
+      Route = ReactRouterDOM.Route;
 
 class Header2 extends React.Component {
   reload = () =>  {
@@ -70,33 +71,10 @@ class App extends React.Component {
     //DB.remove()
   };
 
-  handleClick = param => {
-    const handler = e => {
-      const nextValue = e.target.value;
-      this.setState({ page: param });
-    }
-    if (!memo[param]) {
-      memo[param] = e => handler(e)
-    }
-    return memo[param]
-  };
-
   render() {
-    let status;
-    switch (this.state.page) {
-      case "home":
-        content = <EmployeeTable></EmployeeTable>;
-        break;
-      case "dashboard":
-        content = <EmployeePage></EmployeePage>;
-        break;
-      default:
-        content = <EmployeeTable></EmployeeTable>;
-        break;
-    }
-    return (
-      <div>
 
+    return (
+      <ReactRouterDOM.HashRouter>
         <nav className="navbar" role="navigation" aria-label="main navigation">
       	  <div className="navbar-brand" href="#">
             <a className="navbar-item" href="index.html">Leave Manager</a>
@@ -109,17 +87,9 @@ class App extends React.Component {
 
           <div id="navbarBasicExample" className="navbar-menu">
             <div className="navbar-start">
-              <a className="navbar-item" id="home" onClick={this.handleClick("home")}>
-                Home
-              </a>
-
-              <a className="navbar-item" id="dashboard" onClick={this.handleClick("dashboard")}>
-                Dashboard
-              </a>
-
-
+              <Link className="navbar-item" to="/">Home</Link>
+              <Link className="navbar-item" to="/dash">Dash</Link>
             </div>
-
             <div className="navbar-end">
               <div className="navbar-item has-dropdown is-hoverable">
                 <a className="navbar-link">
@@ -127,14 +97,14 @@ class App extends React.Component {
                 </a>
 
                 <div className="navbar-dropdown">
-                  <a className="navbar-item" onClick={this.handleClick(this)}>
+                  <a className="navbar-item">
                     Reload
                   </a>
-                  <a className="navbar-item" onClick={this.handleClick(this)}>
+                  <a className="navbar-item">
                     Init DB
                   </a>
                   <hr className="navbar-divider"></hr>
-                  <a className="navbar-item" onClick={this.handleClick(this)}>
+                  <a className="navbar-item">
                     Delete DB
                   </a>
                 </div>
@@ -142,8 +112,9 @@ class App extends React.Component {
             </div>
           </div>
       	</nav>
-        {content}
-      </div>
+        <Route path="/" exact component={EmployeeTable} />
+        <Route path="/dash" component={EmployeePage} />
+      </ReactRouterDOM.HashRouter>
     );
   }
 
