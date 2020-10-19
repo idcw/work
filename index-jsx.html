@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Rota World</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/bulma.min.css">
+
+    <script src="lib/alasql.min.js"></script>
+    <script src="js/db.js"></script>
+
+    <script src="lib/react.development.js"></script>
+    <script src="lib/react-dom.development.js"></script>
+    <script src="lib/prop-types.js"></script>
+    <script src="lib/react-router.min.js"></script>
+    <script src="lib/react-router-dom.min.js"></script>
+
+    <!-- Don't use this in production: -->
+    <script src="lib/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script>
+      Babel.registerPreset("my-preset", {
+        presets: [
+          [Babel.availablePresets["es2016"], { "modules": false }],
+          [Babel.availablePresets["react"]]
+
+        ],
+        plugins: [
+          [Babel.availablePlugins["transform-modules-umd"]],
+        ],
+        moduleId: "main"
+      });
+    </script>
+    <script src="js/app.js" type="text/babel" data-presets="my-preset"></script>
+  </body>
+</html>
