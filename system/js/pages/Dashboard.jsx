@@ -13,8 +13,8 @@ import {
   Typography,
   withStyles
 } from '@material-ui/core';
-import { mainListItems, secondaryListItems } from './ListItems.jsx';
-import SimpleTable from './SimpleTable.jsx';
+import { mainListItems, secondaryListItems } from '../components/ListItems.jsx';
+import SimpleTable from '../components/SimpleTable.jsx';
 
 var drawerWidth = 240;
 

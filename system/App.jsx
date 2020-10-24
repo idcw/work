@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Dashboard from './Dashboard.jsx';
+import Dashboard from './js/pages/Dashboard.jsx';
 
 ReactDOM.render(
   <Dashboard classes={{
