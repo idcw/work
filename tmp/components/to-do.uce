@@ -1,6 +1,5 @@
 <to-do>
-  <img src={{logo}} class='logo' alt="uce-template logo">
-  <h1 class="header">uce-template To Do</h1>
+  <h1 class="header">uce-template</h1>
   <div class="container">
     <div class="content">
       {{list}}
