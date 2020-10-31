@@ -10,7 +10,8 @@ function isNumeric(value)
 }
 
 function select_category(select){
-	var clist = categdb.category.find();
+	//var clist = categdb.category.find();
+	var clist = alasql('SELECT * FROM category');
 	var cat = '<select name="category" id="select_category">';
 	for(var i=0; i<clist.length; i++)
 	{

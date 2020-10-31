@@ -1,5 +1,6 @@
 $(document ).ready(function() {
-	var elist = empdb.employee.find();
+	var elist = alasql('SELECT * FROM emp');
+	//var elist = empdb.employee.find();
 	var row_list = "";
 
 	if(elist.length>0){

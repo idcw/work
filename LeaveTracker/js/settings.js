@@ -7,7 +7,8 @@ $(document ).ready(function()
 
 function load_category()
 {
-	var cat_list = categdb.category.find();
+	var cat_list = alasql('SELECT * FROM category');
+	//var cat_list = categdb.category.find();
 	var cat_length = cat_list.length;
 	var row_list = "";
 
@@ -80,7 +81,7 @@ function update_category(id){
 	}; 
 
 	if(c!='' && l!='' && isNumeric(l)){
-		categdb.category.update(query, ucat);
+		//categdb.category.update(query, ucat);
 		alert("Category updated successfully!");
 		location.reload();
 	}
@@ -90,7 +91,7 @@ function update_category(id){
 
 function delete_category(cid){
 	if(confirm("Are you sure?")){
-		categdb.category.remove({_id : cid});
+		//categdb.category.remove({_id : cid});
 		alert("Category deleted successfully!");
 		location.reload();
 	}
@@ -98,7 +99,8 @@ function delete_category(cid){
 
 function load_status()
 {
-	var sat_list = statusdb.status.find();
+	var sat_list = alasql('SELECT * FROM status');
+	//var sat_list = statusdb.status.find();
 	var row_list = "";
 	var sat_length = sat_list.length;
 

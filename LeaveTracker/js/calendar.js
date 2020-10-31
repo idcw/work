@@ -48,14 +48,16 @@ function change(month,year) {
 
 function display_schedule(month,year)
 {
-  var slist = empdb.employee.find({fyear : year, fmonth : month});
-  console.log(year, month,slist);
+  var slist = alasql('SELECT * FROM schedules WHERE fyear LIKE ?', [ '%' + year + '%' ]);
+  //var slist = empdb.employee.find({fyear : year, fmonth : month});
+  console.log(year, month, slist);
   
 }
 
 function get_emplist(cid)
 {
-  var elist = empdb.employee.find({category : cid});
+  var elist = alasql('SELECT * FROM emp WHERE category LIKE ?', [ '%' + cid + '%' ]);
+  //var elist = empdb.employee.find({category : cid});
   if(elist.length!=0){
     var result = {};
     result['emp_id'] = elist[0].sn;
@@ -127,7 +129,6 @@ Calendar.prototype.generateHTML = function(){
 Calendar.prototype.getHTML = function() {
   return this.html;
 }   
-
 
 $(document ).ready(function() {
   document.getElementById('select-cat').innerHTML = select_category("");
