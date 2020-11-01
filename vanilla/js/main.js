@@ -8,7 +8,6 @@ var insertBox = document.querySelector('#insert-box');
 var heroesList = document.querySelector('#heroes-list');
 var leaderIcon = document.querySelector('#leader-icon');
 
-
 var heroSchema = {
     "title": "hero schema",
     "description": "describes a simple hero",
@@ -25,9 +24,6 @@ var heroSchema = {
     },
     "required": ["color"]
 };
-
-console.log('hostname: ' + window.location.hostname);
-const syncURL = 'http://' + window.location.hostname + ':10102/';
 
 window.RxDB
     .createRxDatabase({
@@ -51,13 +47,6 @@ window.RxDB
     })
     .then(function(col) {
         window.col = col;
-        return col;
-    })
-    .then(function(col) {
-        console.log('DatabaseService: sync');
-        col.sync({
-            remote: syncURL + 'hero/'
-        });
         return col;
     })
     .then(function(col) {
